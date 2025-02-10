@@ -2,11 +2,11 @@
 
 WebVOWL is a web application for the interactive visualization of ontologies.
 
-087k/webvowl is a container image of an alpine Tomcat server running OWL2VOWL + WebVOWL 1.1.7 WAR file for easy deployment.
+087k/webvowl is a container image of an alpine nginx server running WebVOWL last version as available from is official github repository https://github.com/VisualDataWeb/WebVOWL.
 
 # Running the container
 
-``` docker run --rm -d -p 80:8080 087k/webvowl```
+``` docker run --rm -d -p 80:80 087k/webvowl```
 
 The application is now served from your http://localhost
 
