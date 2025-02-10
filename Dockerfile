@@ -1,9 +1,24 @@
-FROM tomcat:9-jre8-alpine
+# Build stage
+FROM node:22-alpine AS builder
 
-# WebVOWL version
-ARG version=1.1.7
+WORKDIR /app
 
-RUN rm -rf /usr/local/tomcat/webapps/* && \
-    wget -O /usr/local/tomcat/webapps/ROOT.war http://vowl.visualdataweb.org/downloads/webvowl_${version}.war
+# Install Git
+RUN apk add --no-cache git
 
-ENTRYPOINT ["catalina.sh", "run"]
+# Clone WebVOWL Github Repo
+RUN git clone https://github.com/VisualDataWeb/WebVOWL.git .
+
+# Install dependencies and build
+RUN npm install
+RUN npm run-script release
+
+# Production stage
+FROM nginx:alpine
+COPY --from=builder /app/deploy /usr/share/nginx/html
+
+# Optional: Custom nginx configuration if needed
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
