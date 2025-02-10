@@ -28,8 +28,8 @@ jobs:
           username: ${{ secrets.DOCK_U }}
           password: ${{ secrets.DOCK_P }}
 
-     - name: pull 087k/webvowl:v1.1.7 to keep repo alive and use it as cache
-       run: |
+      - name: pull 087k/webvowl:v1.1.7 to keep repo alive and use it as cache
+        run: |
          docker pull 087k/webvowl:v1.1.7
 
       - name: Build and Push Multiarch 087K/webvowl image embedding last official webvolw
